@@ -269,3 +269,22 @@ Poly Poly::operator+(const Poly &P)const{
 }
 // subtração de poly
 Poly Poly::operator-(const Poly &P)const{ return operator+(-P);}
+
+// multiplicação de poly
+Poly Poly::operator*(const Poly &P)const{
+    int grau_result = this->grau + P.grau;
+    Poly result(grau_result);
+    if( this->empty() || this->isZero() || P.empty() || P.isZero()){
+        result.grau = min(this->grau, P.grau); 
+    }else{
+        for(int k = 0; k<=result.grau; k++){
+            result.a[k] = 0.0;
+        }
+        for(int i=0;i<=this->grau;i++){
+            for(int j=0; j<=P.grau; j++){
+                result.a[i+j] += this->a[i]*P.a[j];
+            }
+        }
+    }
+    return result;
+}

@@ -60,6 +60,8 @@ class Poly
         Poly operator+(const Poly &P)const;
         // subtração de poly
         Poly operator-(const Poly &P)const;
+        // multiplicação de poly
+        Poly operator*(const Poly &P)const;
 
 };  
 #endif // POLY_H
