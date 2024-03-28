@@ -1,7 +1,9 @@
 #include "Poly.h"
 
 #include <iostream>
+#include <cmath> // pow
 using namespace std;
+
 //Construtor default
 Poly::Poly(): grau(-1), a(nullptr){}
 
@@ -86,3 +88,69 @@ void Poly::setCoef(int posicao, double new_coef){
     }
     a[posicao] = new_coef;
 }
+
+// sobrecarga do operador []
+double Poly::operator[](int posicao) const{ return getCoef(posicao);}
+
+// metodo para redefinir o grau e os coeficientes
+void Poly::recriar(int new_grau){
+    if(grau != new_grau){
+        if(new_grau < 0){
+            *this = Poly();
+        }else if(new_grau == 0){
+            *this = Poly(0);
+        }else{
+            *this = Poly(new_grau);
+        } 
+    }
+    return;
+}
+
+// sobrecarga do operador ==
+bool Poly::operator==(const Poly &P) const{
+    if(this->grau == P.grau){
+        for(int i=0; i<=grau; i++){
+            if(this->a[i] != P.a[i]) return false;
+        }
+        return true;
+    }
+    return false;
+}
+
+// sobrecarga do operador !=
+bool Poly::operator!=(const Poly &P) const{
+    if(*this==P){
+        return false;
+    }
+    return true;
+}
+
+// metodo de consulta empty
+bool Poly::empty() const{
+    if(grau < 0){
+        return true;
+    }
+    return false;
+}
+
+// metodo de consulta isZero
+bool Poly::isZero() const{
+    if(grau == 0 && a[0] == 0.0){
+        return true;
+    }
+    return false;
+}
+
+// metodo de consulta getValor
+double Poly::getValor(const double x) const{
+    if(empty()){
+        return 0.0;
+    }
+    double result = 0.0;
+    for(int i=0; i <=grau; i++){ 
+        result += a[i] * pow(x, i);
+    }
+    return result;
+}
+// sobrecarga do operador ()
+double Poly::operator()(double x) const{ return getValor(x);}

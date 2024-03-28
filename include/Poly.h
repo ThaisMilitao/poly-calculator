@@ -28,6 +28,22 @@ class Poly
         double getCoef(int posicao) const;
         // metodo de alterar o coef
         void setCoef(int posicao, double new_coef);
+        // sobrecarga do operador []
+        double operator[](int posicao) const;
+        // metodo para redefinir o grau e os coeficientes
+        void recriar(int new_grau);
+        // sobrecarga do operador ==
+        bool operator==(const Poly &P) const;
+        // sobrecarga do operador !=
+        bool operator!=(const Poly &P) const;
+        // metodo de consulta empty
+        bool empty() const;
+        // metodo de consulta isZero
+        bool isZero() const;
+        // metodo de consulta getValor
+        double getValor(const double x) const;
+        // sobrecarga do operador ()
+        double operator()(double x) const;
 
 };
 #endif // POLY_H
