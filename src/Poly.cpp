@@ -164,16 +164,16 @@ ostream &operator<<(ostream &X, const Poly &P){
             if(i==0 && P.grau == 0) X << P.a[i];
         }else{
             if(P.a[i] < 0.0){
-                X << '-';
+                X << "-";
             }else{
-                if(i != P.grau) X << '+';
+                if(i != P.grau) X << "+";
             }
             if(fabs(P.a[i]) != 1.0 || i == 0) X << fabs(P.a[i]);
             if( i != 0){
-                if(fabs(P.a[i]) != 1.0) X << '*';
-                X << 'x';
+                if(fabs(P.a[i]) != 1.0) X << "*";
+                X << "x";
                 if(i > 1){
-                    X << '^';
+                    X << "^";
                     X << i;
                 }
             }
@@ -188,17 +188,17 @@ istream &operator>>(istream &X, const Poly &P){
         return X;
     }else{
         if(P.grau == 0){
-            cout << 'x^' << P.grau << ':';
+            cout << "x^" << P.grau << ":";
             X >> P.a[0];
         }else{
             for(int i = P.grau; i>= 0; i--){
                 if(i == P.grau){
                     do{
-                        cout << 'x^' << i << ':';
+                        cout << "x^" << i << ":";
                         X >> P.a[P.grau];
                     }while(P.a[P.grau] == 0.0);
                 }else{
-                    cout << 'x^' << i << ':';
+                    cout << "x^" << i << ":";
                     X >> P.a[i];
                 }
             }
@@ -224,3 +224,22 @@ bool Poly::salvar(const string &arquivo) const{
     return true;
 }
 
+// metodo pra ler arquivo
+bool Poly::ler(const std::string &arquivo){
+    ifstream input(arquivo);
+    if(!input.is_open()) return false;
+
+    string linha;
+    int grau_arq;
+    input >> linha;
+    input >>grau_arq;
+
+    if(!input || linha != "POLY") return false;
+    Poly P(grau_arq);
+    for(int i = 0; i <= grau_arq; i++){
+        if(!(input >> P.a[i]) || (P.getCoef(grau_arq) == 0 && grau_arq !=0)) return false;
+    }
+
+    *this = move(P);
+    return true;
+}

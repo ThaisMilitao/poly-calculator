@@ -50,5 +50,8 @@ class Poly
         friend std::istream &operator>>(std::istream &X, const Poly &P);
         // metodo para escrever um poly em arquivo 
         bool salvar(const std::string &arquivo) const;
+        // metodo pra ler arquivo
+        bool ler(const std::string &arquivo);
+
 };  
 #endif // POLY_H
