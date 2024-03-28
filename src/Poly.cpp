@@ -225,7 +225,7 @@ bool Poly::salvar(const string &arquivo) const{
 }
 
 // metodo pra ler arquivo
-bool Poly::ler(const std::string &arquivo){
+bool Poly::ler(const string &arquivo){
     ifstream input(arquivo);
     if(!input.is_open()) return false;
 
@@ -243,3 +243,29 @@ bool Poly::ler(const std::string &arquivo){
     *this = move(P);
     return true;
 }
+
+// metodo inverter sinal
+Poly Poly::operator-()const{
+    if(empty()) return Poly();
+    
+    Poly P(grau);
+    
+    for(int i = 0; i<= grau; i++) P.a[i] = -a[i];
+    
+    return P;
+}
+
+// soma de poly
+Poly Poly::operator+(const Poly &P)const{
+    int grau_max = max(this->grau, P.grau);
+    Poly Poly_result(grau_max);
+    for(int i = Poly_result.grau; i>=0;i--){
+        Poly_result.a[i] = P.getCoef(i) + this->getCoef(i);
+        if(Poly_result.grau == i && Poly_result.getCoef(i) == 0 && Poly_result.grau != 0){
+            Poly_result.grau--;
+        }
+    }
+    return Poly_result;
+}
+// subtração de poly
+Poly Poly::operator-(const Poly &P)const{ return operator+(-P);}

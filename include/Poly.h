@@ -1,6 +1,8 @@
 #ifndef POLY_H
 #define POLY_H
 
+#include <iostream>
+
 class Poly
 {   
     private:
@@ -52,6 +54,12 @@ class Poly
         bool salvar(const std::string &arquivo) const;
         // metodo pra ler arquivo
         bool ler(const std::string &arquivo);
+        // metodo inverter sinal
+        Poly operator-()const;
+        // soma de poly
+        Poly operator+(const Poly &P)const;
+        // subtração de poly
+        Poly operator-(const Poly &P)const;
 
 };  
 #endif // POLY_H
