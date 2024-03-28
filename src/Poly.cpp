@@ -1,6 +1,7 @@
 #include "Poly.h"
 
 #include <iostream>
+#include <fstream>
 #include <cmath> // pow
 using namespace std;
 
@@ -152,5 +153,74 @@ double Poly::getValor(const double x) const{
     }
     return result;
 }
+
 // sobrecarga do operador ()
 double Poly::operator()(double x) const{ return getValor(x);}
+
+// output de dados
+ostream &operator<<(ostream &X, const Poly &P){
+    for(int i=P.grau; i>=0; i--){
+        if(P.a[i]==0.0){
+            if(i==0 && P.grau == 0) X << P.a[i];
+        }else{
+            if(P.a[i] < 0.0){
+                X << '-';
+            }else{
+                if(i != P.grau) X << '+';
+            }
+            if(fabs(P.a[i]) != 1.0 || i == 0) X << fabs(P.a[i]);
+            if( i != 0){
+                if(fabs(P.a[i]) != 1.0) X << '*';
+                X << 'x';
+                if(i > 1){
+                    X << '^';
+                    X << i;
+                }
+            }
+        }
+    }
+    return X;
+}
+
+// input de dados
+istream &operator>>(istream &X, const Poly &P){
+    if(P.empty()){
+        return X;
+    }else{
+        if(P.grau == 0){
+            cout << 'x^' << P.grau << ':';
+            X >> P.a[0];
+        }else{
+            for(int i = P.grau; i>= 0; i--){
+                if(i == P.grau){
+                    do{
+                        cout << 'x^' << i << ':';
+                        X >> P.a[P.grau];
+                    }while(P.a[P.grau] == 0.0);
+                }else{
+                    cout << 'x^' << i << ':';
+                    X >> P.a[i];
+                }
+            }
+        }
+    }
+    return X;
+}
+
+// metodo para escrever um poly em arquivo 
+bool Poly::salvar(const string &arquivo) const{
+    ofstream output(arquivo);
+    if(!output.is_open()){
+        return false;
+    }
+    output << "POLY " << grau << endl;
+    if( grau < 0){
+        return true;
+    }
+    for (int i = 0; i<=grau; i++){
+        output << a[i] <<" ";
+    }
+    output << endl;
+    return true;
+}
+

@@ -44,6 +44,11 @@ class Poly
         double getValor(const double x) const;
         // sobrecarga do operador ()
         double operator()(double x) const;
-
-};
+        // output de dados
+        friend std::ostream &operator<<(std::ostream &X, const Poly &P);
+        // input de dados
+        friend std::istream &operator>>(std::istream &X, const Poly &P);
+        // metodo para escrever um poly em arquivo 
+        bool salvar(const std::string &arquivo) const;
+};  
 #endif // POLY_H
